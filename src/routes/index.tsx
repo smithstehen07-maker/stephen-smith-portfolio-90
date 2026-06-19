@@ -4,7 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import {
   ArrowRight, Download, Github, Linkedin, Mail, MapPin, ExternalLink,
   Code2, Database, Brain, Layers, Server, Wrench, Quote, Send, Sparkles,
-  CheckCircle2, X
+  CheckCircle2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
