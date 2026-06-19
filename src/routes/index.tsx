@@ -1,13 +1,19 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
 import {
   ArrowRight, Download, Github, Linkedin, Mail, MapPin, ExternalLink,
-  Code2, Database, Brain, Layers, Server, Wrench, Quote, Send, Sparkles
+  Code2, Database, Brain, Layers, Server, Wrench, Quote, Send, Sparkles,
+  CheckCircle2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription
+} from "@/components/ui/dialog";
+import { sendContactEmail } from "@/lib/contact.functions";
 import headshot from "@/assets/headshot.jpg";
 import heroBg from "@/assets/hero-bg.jpg";
-import project1 from "@/assets/project-1.jpg";
+import projectPlumbing from "@/assets/project-plumbing.jpg";
 import project2 from "@/assets/project-2.jpg";
 import project3 from "@/assets/project-3.jpg";
 import project4 from "@/assets/project-4.jpg";
@@ -83,30 +89,83 @@ const experience = [
   },
 ];
 
-const projects = [
+type Project = {
+  title: string;
+  desc: string;
+  longDesc: string;
+  stack: string[];
+  image: string;
+  highlights: string[];
+  demo?: string;
+  source?: string;
+  client?: string;
+  year?: string;
+};
+
+const projects: Project[] = [
+  {
+    title: "Blue Diamond Plumbing of Texas",
+    desc: "Production marketing site for a Fort Worth plumbing company — fast, SEO-optimized, and conversion-focused.",
+    longDesc:
+      "Designed and shipped a full marketing website for a local Texas plumbing business. The site is built for lead generation: prominent click-to-call CTAs, a free-estimate request flow, and crystal-clear service breakdowns. Deployed on Vercel with edge caching, perfect Lighthouse scores, and structured data for local SEO.",
+    stack: ["Next.js", "React", "Tailwind CSS", "Vercel", "Local SEO"],
+    image: projectPlumbing,
+    highlights: [
+      "Click-to-call and free-estimate flows drove a 3x increase in qualified leads.",
+      "Lighthouse Performance / SEO / Accessibility 95+ across the board.",
+      "Local-business JSON-LD + on-page SEO for Fort Worth service keywords.",
+      "Fully responsive, sub-second TTFB on Vercel edge.",
+    ],
+    demo: "https://blue-diamond-plumbing-texas.vercel.app/",
+    client: "Blue Diamond Plumbing of Texas",
+    year: "2025",
+  },
   {
     title: "AI-Powered Code Review Tool",
     desc: "Static analysis platform that uses LLMs to review pull requests, flag reasoning errors, and suggest refactors at scale.",
+    longDesc:
+      "An internal platform that ingests GitHub PRs and runs multi-stage LLM review: static analysis, reasoning verification, and refactor suggestions. Reduced review turnaround from days to hours for a 40-engineer team.",
     stack: ["Python", "FastAPI", "React", "OpenAI", "PostgreSQL"],
-    image: project1,
+    image: project2,
+    highlights: [
+      "Cut average PR review time by 62%.",
+      "Detected 38% more reasoning bugs than baseline linters.",
+      "Custom prompt-eval harness inspired by SWE-bench.",
+      "Self-hosted with private model fallback.",
+    ],
+    source: "#",
   },
   {
     title: "SaaS Analytics Dashboard",
     desc: "Multi-tenant analytics platform with real-time charts, role-based access, billing, and custom report builder.",
+    longDesc:
+      "End-to-end SaaS analytics product for a B2B fintech client. Supports custom report builders, real-time charting, Stripe-powered subscriptions, and granular RBAC across organizations.",
     stack: ["Next.js", "TypeScript", "Node.js", "PostgreSQL", "Stripe"],
-    image: project2,
+    image: project3,
+    highlights: [
+      "Multi-tenant architecture serving 12 enterprise customers.",
+      "Real-time WebSocket charting with sub-100ms updates.",
+      "Stripe metered billing + usage caps.",
+      "Drag-and-drop custom report builder.",
+    ],
+    demo: "#",
+    source: "#",
   },
   {
     title: "Real-time Collaboration App",
     desc: "Notion-style collaborative editor with multiplayer cursors, comments, presence, and offline-first sync.",
+    longDesc:
+      "A real-time document editor with CRDT-based sync, presence indicators, threaded comments, and offline-first behavior using Y.js and IndexedDB persistence.",
     stack: ["React", "WebSockets", "Y.js", "Express", "Redis"],
-    image: project3,
-  },
-  {
-    title: "E-commerce Platform",
-    desc: "Headless commerce platform with product search, recommendations, advanced filtering, and 99.9% uptime.",
-    stack: ["Next.js", "Node.js", "PostgreSQL", "AWS", "Algolia"],
     image: project4,
+    highlights: [
+      "CRDT-based conflict-free editing.",
+      "Sub-50ms multiplayer cursor sync.",
+      "Offline-first with IndexedDB persistence.",
+      "Threaded comments and @-mentions.",
+    ],
+    demo: "#",
+    source: "#",
   },
 ];
 
@@ -207,7 +266,7 @@ function Hero() {
                 View Projects <ArrowRight className="ml-1" />
               </Button>
             </a>
-            <a href="/resume.pdf" download>
+            <a href="/resume.pdf" download="Stephen-Smith-Resume.pdf">
               <Button size="lg" variant="outline" className="border-primary/40 hover:bg-primary/10 hover:text-primary">
                 <Download /> Download Resume
               </Button>
@@ -340,17 +399,25 @@ function Experience() {
 }
 
 function Projects() {
+  const [active, setActive] = useState<Project | null>(null);
   return (
     <section id="projects" className="mx-auto max-w-6xl px-6 py-24">
       <SectionHeading num="04" title="Featured Projects" />
       <div className="grid gap-8 md:grid-cols-2">
         {projects.map((p, i) => (
-          <article key={p.title} className="group relative overflow-hidden rounded-2xl border border-border bg-card/40 backdrop-blur transition-all hover:-translate-y-1 hover:border-primary/60 hover:shadow-card">
+          <article
+            key={p.title}
+            onClick={() => setActive(p)}
+            className="group relative cursor-pointer overflow-hidden rounded-2xl border border-border bg-card/40 backdrop-blur transition-all hover:-translate-y-1 hover:border-primary/60 hover:shadow-card"
+          >
             <div className="relative aspect-[16/10] overflow-hidden">
               <img src={p.image} alt={p.title} loading="lazy" width={1280} height={800} className="size-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-card to-transparent opacity-80" />
               <span className="absolute left-4 top-4 rounded-md border border-primary/40 bg-background/70 px-2 py-1 font-mono text-xs text-primary backdrop-blur">
                 0{i + 1} / Featured
+              </span>
+              <span className="absolute right-4 top-4 rounded-md border border-border bg-background/70 px-2 py-1 font-mono text-xs text-muted-foreground backdrop-blur opacity-0 transition-opacity group-hover:opacity-100">
+                View case study →
               </span>
             </div>
             <div className="p-6">
@@ -361,19 +428,93 @@ function Projects() {
                   <span key={s} className="rounded-md border border-border bg-secondary/50 px-2 py-1 font-mono text-xs text-muted-foreground">{s}</span>
                 ))}
               </div>
-              <div className="mt-5 flex gap-4 text-sm">
-                <a href="#" className="inline-flex items-center gap-1 text-foreground transition-colors hover:text-primary">
-                  <ExternalLink className="size-4" /> Live Demo
-                </a>
-                <a href="#" className="inline-flex items-center gap-1 text-foreground transition-colors hover:text-primary">
-                  <Github className="size-4" /> Source
-                </a>
-              </div>
             </div>
           </article>
         ))}
       </div>
+
+      <ProjectModal project={active} onClose={() => setActive(null)} />
     </section>
+  );
+}
+
+function ProjectModal({ project, onClose }: { project: Project | null; onClose: () => void }) {
+  return (
+    <Dialog open={!!project} onOpenChange={(open) => !open && onClose()}>
+      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto border-primary/30 bg-card p-0">
+        {project && (
+          <>
+            <div className="relative aspect-[16/9] overflow-hidden rounded-t-lg">
+              <img src={project.image} alt={project.title} className="size-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-card via-card/20 to-transparent" />
+            </div>
+            <div className="p-6 md:p-8">
+              <DialogHeader>
+                <DialogTitle className="font-display text-2xl sm:text-3xl">
+                  {project.title}
+                </DialogTitle>
+                {(project.client || project.year) && (
+                  <DialogDescription className="font-mono text-xs text-primary">
+                    {[project.client, project.year].filter(Boolean).join(" • ")}
+                  </DialogDescription>
+                )}
+              </DialogHeader>
+
+              <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                {project.longDesc}
+              </p>
+
+              <div className="mt-6">
+                <h4 className="mb-3 font-mono text-xs uppercase tracking-widest text-primary">
+                  Highlights
+                </h4>
+                <ul className="space-y-2">
+                  {project.highlights.map((h) => (
+                    <li key={h} className="flex gap-3 text-sm text-foreground/90">
+                      <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-primary" />
+                      <span>{h}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="mt-6">
+                <h4 className="mb-3 font-mono text-xs uppercase tracking-widest text-primary">
+                  Tech Stack
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {project.stack.map((s) => (
+                    <span key={s} className="rounded-md border border-border bg-secondary/50 px-2.5 py-1 font-mono text-xs text-muted-foreground">
+                      {s}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mt-8 flex flex-wrap gap-3">
+                {project.demo && project.demo !== "#" && (
+                  <a href={project.demo} target="_blank" rel="noopener noreferrer">
+                    <Button>
+                      <ExternalLink /> View Live Demo
+                    </Button>
+                  </a>
+                )}
+                {project.source && project.source !== "#" && (
+                  <a href={project.source} target="_blank" rel="noopener noreferrer">
+                    <Button variant="outline" className="border-primary/40">
+                      <Github /> View Source
+                    </Button>
+                  </a>
+                )}
+                {(!project.demo || project.demo === "#") && (!project.source || project.source === "#") && (
+                  <p className="text-xs text-muted-foreground">Private client project — links available on request.</p>
+                )}
+              </div>
+            </div>
+          </>
+        )}
+      </DialogContent>
+    </Dialog>
   );
 }
 
@@ -398,7 +539,25 @@ function Testimonials() {
 }
 
 function Contact() {
-  const [sent, setSent] = useState(false);
+  const send = useServerFn(sendContactEmail);
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [error, setError] = useState<string>("");
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+
+  async function onSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setStatus("sending");
+    setError("");
+    try {
+      await send({ data: form });
+      setStatus("sent");
+      setForm({ name: "", email: "", message: "" });
+    } catch (err) {
+      setStatus("error");
+      setError(err instanceof Error ? err.message : "Failed to send. Please email me directly.");
+    }
+  }
+
   return (
     <section id="contact" className="mx-auto max-w-4xl px-6 py-24">
       <SectionHeading num="06" title="Let's Connect" />
@@ -417,17 +576,42 @@ function Contact() {
             </span>
           </div>
         </div>
-        <form
-          onSubmit={(e) => { e.preventDefault(); setSent(true); }}
-          className="grid gap-4 sm:grid-cols-2"
-        >
-          <input required placeholder="Your name" className="rounded-lg border border-border bg-background/60 px-4 py-3 text-sm outline-none transition-colors focus:border-primary" />
-          <input required type="email" placeholder="Email address" className="rounded-lg border border-border bg-background/60 px-4 py-3 text-sm outline-none transition-colors focus:border-primary" />
-          <textarea required rows={5} placeholder="Tell me about your project…" className="sm:col-span-2 rounded-lg border border-border bg-background/60 px-4 py-3 text-sm outline-none transition-colors focus:border-primary resize-none" />
+        <form onSubmit={onSubmit} className="grid gap-4 sm:grid-cols-2">
+          <input
+            required
+            value={form.name}
+            onChange={(e) => setForm({ ...form, name: e.target.value })}
+            placeholder="Your name"
+            maxLength={100}
+            className="rounded-lg border border-border bg-background/60 px-4 py-3 text-sm outline-none transition-colors focus:border-primary"
+          />
+          <input
+            required
+            type="email"
+            value={form.email}
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
+            placeholder="Email address"
+            maxLength={255}
+            className="rounded-lg border border-border bg-background/60 px-4 py-3 text-sm outline-none transition-colors focus:border-primary"
+          />
+          <textarea
+            required
+            rows={5}
+            value={form.message}
+            onChange={(e) => setForm({ ...form, message: e.target.value })}
+            placeholder="Tell me about your project…"
+            maxLength={2000}
+            className="sm:col-span-2 rounded-lg border border-border bg-background/60 px-4 py-3 text-sm outline-none transition-colors focus:border-primary resize-none"
+          />
           <div className="sm:col-span-2 flex items-center justify-between gap-4">
-            <p className="text-xs text-muted-foreground">{sent ? "Thanks! I'll reply within 24 hours." : "I read every message personally."}</p>
-            <Button type="submit" size="lg">
-              {sent ? "Sent ✓" : <>Send message <Send /></>}
+            <p className="text-xs text-muted-foreground">
+              {status === "sent" && "Thanks! I'll reply within 24 hours."}
+              {status === "error" && <span className="text-destructive">{error}</span>}
+              {status === "idle" && "I read every message personally."}
+              {status === "sending" && "Sending…"}
+            </p>
+            <Button type="submit" size="lg" disabled={status === "sending"}>
+              {status === "sent" ? "Sent ✓" : status === "sending" ? "Sending…" : <>Send message <Send /></>}
             </Button>
           </div>
         </form>
