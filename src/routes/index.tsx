@@ -267,7 +267,21 @@ function Hero() {
                 View Projects <ArrowRight className="ml-1" />
               </Button>
             </a>
-            <a href="/resume.pdf" download="Stephen-Smith-Resume.pdf">
+            <a
+              href="/resume.pdf"
+              download="Stephen-Smith-Resume.pdf"
+              onClick={async (e) => {
+                try {
+                  const res = await fetch("/resume.pdf", { method: "HEAD" });
+                  if (!res.ok) {
+                    e.preventDefault();
+                    alert("Resume is temporarily unavailable. Please contact me directly.");
+                  }
+                } catch {
+                  // Allow default behavior if fetch fails (e.g. offline)
+                }
+              }}
+            >
               <Button size="lg" variant="outline" className="border-primary/40 hover:bg-primary/10 hover:text-primary">
                 <Download /> Download Resume
               </Button>
