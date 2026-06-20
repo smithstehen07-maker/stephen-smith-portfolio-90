@@ -643,8 +643,8 @@ function Footer() {
           © {new Date().getFullYear()} Stephen Smith. Built with care.
         </p>
         <div className="flex gap-5 text-muted-foreground">
-          <a href="#" aria-label="GitHub" className="transition-colors hover:text-primary"><Github className="size-5" /></a>
-          <a href="#" aria-label="LinkedIn" className="transition-colors hover:text-primary"><Linkedin className="size-5" /></a>
+          <a href="https://github.com/smithstehen07" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="transition-colors hover:text-primary"><Github className="size-5" /></a>
+          <a href="https://www.linkedin.com/in/smith-stephen-427404418" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="transition-colors hover:text-primary"><Linkedin className="size-5" /></a>
           <a href="mailto:Smithstehen07@gmail.com" aria-label="Email" className="transition-colors hover:text-primary"><Mail className="size-5" /></a>
         </div>
       </div>
