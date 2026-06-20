@@ -11,7 +11,8 @@ import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription
 } from "@/components/ui/dialog";
 import { sendContactEmail } from "@/lib/contact.functions";
-import headshot from "@/assets/headshot.jpg";
+import headshotAsset from "@/assets/headshot-real.jpg.asset.json";
+const headshot = headshotAsset.url;
 import heroBg from "@/assets/hero-bg.jpg";
 import projectPlumbing from "@/assets/project-plumbing.jpg";
 import project2 from "@/assets/project-2.jpg";
