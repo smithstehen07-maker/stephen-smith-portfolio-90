@@ -11,7 +11,8 @@ import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription
 } from "@/components/ui/dialog";
 import { sendContactEmail } from "@/lib/contact.functions";
-import headshot from "@/assets/headshot.jpg";
+import headshotAsset from "@/assets/headshot-real.jpg.asset.json";
+const headshot = headshotAsset.url;
 import heroBg from "@/assets/hero-bg.jpg";
 import projectPlumbing from "@/assets/project-plumbing.jpg";
 import project2 from "@/assets/project-2.jpg";
@@ -266,7 +267,21 @@ function Hero() {
                 View Projects <ArrowRight className="ml-1" />
               </Button>
             </a>
-            <a href="/resume.pdf" download="Stephen-Smith-Resume.pdf">
+            <a
+              href="/resume.pdf"
+              download="Stephen-Smith-Resume.pdf"
+              onClick={async (e) => {
+                try {
+                  const res = await fetch("/resume.pdf", { method: "HEAD" });
+                  if (!res.ok) {
+                    e.preventDefault();
+                    alert("Resume is temporarily unavailable. Please contact me directly.");
+                  }
+                } catch {
+                  // Allow default behavior if fetch fails (e.g. offline)
+                }
+              }}
+            >
               <Button size="lg" variant="outline" className="border-primary/40 hover:bg-primary/10 hover:text-primary">
                 <Download /> Download Resume
               </Button>
@@ -628,8 +643,8 @@ function Footer() {
           © {new Date().getFullYear()} Stephen Smith. Built with care.
         </p>
         <div className="flex gap-5 text-muted-foreground">
-          <a href="#" aria-label="GitHub" className="transition-colors hover:text-primary"><Github className="size-5" /></a>
-          <a href="#" aria-label="LinkedIn" className="transition-colors hover:text-primary"><Linkedin className="size-5" /></a>
+          <a href="https://github.com/smithstehen07" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="transition-colors hover:text-primary"><Github className="size-5" /></a>
+          <a href="https://www.linkedin.com/in/smith-stephen-427404418" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="transition-colors hover:text-primary"><Linkedin className="size-5" /></a>
           <a href="mailto:Smithstehen07@gmail.com" aria-label="Email" className="transition-colors hover:text-primary"><Mail className="size-5" /></a>
         </div>
       </div>
