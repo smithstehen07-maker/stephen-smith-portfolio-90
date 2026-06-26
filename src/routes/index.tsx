@@ -15,9 +15,14 @@ import headshotAsset from "@/assets/headshot-real.jpg.asset.json";
 const headshot = headshotAsset.url;
 import heroBg from "@/assets/hero-bg.jpg";
 import projectPlumbing from "@/assets/project-plumbing.jpg";
-import project2 from "@/assets/project-2.jpg";
-import project3 from "@/assets/project-3.jpg";
-import project4 from "@/assets/project-4.jpg";
+import cadVtwinAsset from "@/assets/cad-vtwin.png.asset.json";
+import cadCrankshaftAsset from "@/assets/cad-crankshaft.png.asset.json";
+import cadSprocketAsset from "@/assets/cad-sprocket.png.asset.json";
+import cadScrewAsset from "@/assets/cad-screw.png.asset.json";
+const cadVtwin = cadVtwinAsset.url;
+const cadCrankshaft = cadCrankshaftAsset.url;
+const cadSprocket = cadSprocketAsset.url;
+const cadScrew = cadScrewAsset.url;
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -122,51 +127,68 @@ const projects: Project[] = [
     year: "2025",
   },
   {
-    title: "AI-Powered Code Review Tool",
-    desc: "Static analysis platform that uses LLMs to review pull requests, flag reasoning errors, and suggest refactors at scale.",
+    title: "V-Twin Engine Assembly",
+    desc: "Fully constrained V-twin engine assembly with motion study — pistons, connecting rods, and crankshaft modeled in SolidWorks.",
     longDesc:
-      "An internal platform that ingests GitHub PRs and runs multi-stage LLM review: static analysis, reasoning verification, and refactor suggestions. Reduced review turnaround from days to hours for a 40-engineer team.",
-    stack: ["Python", "FastAPI", "React", "OpenAI", "PostgreSQL"],
-    image: project2,
+      "A complete V-twin internal combustion engine assembly built in SolidWorks 2023. Designed transparent cylinder walls to expose piston travel, modeled the connecting rods and crankshaft as separate parts, and ran a Motion Study to validate the firing order and timing. Every mate was tested for full degree-of-freedom resolution.",
+    stack: ["SolidWorks 2023", "Assembly Design", "Motion Study", "GD&T", "Mechanical Engineering"],
+    image: cadVtwin,
     highlights: [
-      "Cut average PR review time by 62%.",
-      "Detected 38% more reasoning bugs than baseline linters.",
-      "Custom prompt-eval harness inspired by SWE-bench.",
-      "Self-hosted with private model fallback.",
+      "Fully constrained assembly with zero floating components.",
+      "Animated piston / crankshaft motion study for firing-order validation.",
+      "Transparent cylinder render for educational visualization.",
+      "Mass properties calculated for balance analysis.",
     ],
-    source: "#",
+    client: "Personal Engineering Project",
+    year: "2024",
   },
   {
-    title: "SaaS Analytics Dashboard",
-    desc: "Multi-tenant analytics platform with real-time charts, role-based access, billing, and custom report builder.",
+    title: "Inline-4 Crankshaft — Precision Part",
+    desc: "Production-grade inline-4 crankshaft with hole specification, thread callouts, and tap-drill tolerancing in SolidWorks.",
     longDesc:
-      "End-to-end SaaS analytics product for a B2B fintech client. Supports custom report builders, real-time charting, Stripe-powered subscriptions, and granular RBAC across organizations.",
-    stack: ["Next.js", "TypeScript", "Node.js", "PostgreSQL", "Stripe"],
-    image: project3,
+      "A manufacturable inline-4 crankshaft modeled to OEM tolerances. Used the Hole Wizard to spec blind threaded holes (M6.8 x 20mm) with proper tap-drill diameters per ISO standards. Counterweights were balanced through mass-properties iteration and the part is ready for CNC toolpath generation.",
+    stack: ["SolidWorks", "Hole Wizard", "ISO Tolerancing", "CNC-Ready", "Surface Finish"],
+    image: cadCrankshaft,
     highlights: [
-      "Multi-tenant architecture serving 12 enterprise customers.",
-      "Real-time WebSocket charting with sub-100ms updates.",
-      "Stripe metered billing + usage caps.",
-      "Drag-and-drop custom report builder.",
+      "Hole Wizard with proper tap-drill diameters and thread callouts.",
+      "Counterweights mass-balanced via iterative analysis.",
+      "Production-ready geometry — exports clean to STEP / IGES.",
+      "Drawing package with GD&T per ASME Y14.5.",
     ],
-    demo: "#",
-    source: "#",
+    client: "Personal Engineering Project",
+    year: "2024",
   },
   {
-    title: "Real-time Collaboration App",
-    desc: "Notion-style collaborative editor with multiplayer cursors, comments, presence, and offline-first sync.",
+    title: "Industrial Sprocket Drive Sub-Assembly",
+    desc: "Multi-part PDM-managed sub-assembly with sprocket, swing arm, tensioners, and over 20 fasteners — integrated with EnterpriseIQ.",
     longDesc:
-      "A real-time document editor with CRDT-based sync, presence indicators, threaded comments, and offline-first behavior using Y.js and IndexedDB persistence.",
-    stack: ["React", "WebSockets", "Y.js", "Express", "Redis"],
-    image: project4,
+      "A complex industrial drive sub-assembly (P/N 10000227) built inside an EnterpriseIQ PDM-controlled environment. Includes the drive sprocket, swing arm, dual tensioners, guide, spacer hub, and a full BOM of fasteners. Document Control linked every component back to the EnterpriseIQ MRP system so revisions stay in sync with the shop floor.",
+    stack: ["SolidWorks 2020", "EnterpriseIQ PDM", "Sub-Assembly", "BOM Management", "Document Control"],
+    image: cadSprocket,
     highlights: [
-      "CRDT-based conflict-free editing.",
-      "Sub-50ms multiplayer cursor sync.",
-      "Offline-first with IndexedDB persistence.",
-      "Threaded comments and @-mentions.",
+      "20+ unique parts managed under PDM revision control.",
+      "Linked to EnterpriseIQ MRP for live BOM sync.",
+      "Configurations support multiple drive ratios from one assembly.",
+      "Exploded-view drawing for assembly-line work instructions.",
     ],
-    demo: "#",
-    source: "#",
+    client: "Manufacturing Client",
+    year: "2023",
+  },
+  {
+    title: "Helical Wood Screw — Swept Threads",
+    desc: "Parametric self-tapping wood screw using Helix/Spiral, Swept Cut, and Phillips drive — fully reconfigurable fastener.",
+    longDesc:
+      "A self-tapping countersunk wood screw modeled parametrically. The thread is generated by a swept cut along a helical path so length, pitch, and major diameter all drive from a single design table. The Phillips drive recess is a true cross-extrude (not a decal) and the gimlet point is a lofted boss for accurate pilot behavior.",
+    stack: ["SolidWorks 2022", "Helix / Spiral", "Swept Cut", "Design Tables", "Parametric Modeling"],
+    image: cadScrew,
+    highlights: [
+      "Single design table drives 12 standard screw sizes.",
+      "True swept-cut threads (not cosmetic) — prints accurately on resin printers.",
+      "Phillips drive recess modeled to ANSI/ASME B18.6.3.",
+      "Gimlet point built from a lofted boss for realistic pilot action.",
+    ],
+    client: "Personal Engineering Project",
+    year: "2023",
   },
 ];
 
