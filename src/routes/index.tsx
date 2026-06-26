@@ -11,22 +11,15 @@ import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription
 } from "@/components/ui/dialog";
 import { sendContactEmail } from "@/lib/contact.functions";
-import headshotAsset from "@/assets/headshot-real.jpg.asset.json";
-const headshot = headshotAsset.url;
+import headshot from "@/assets/headshot-real.jpg";
 import heroBg from "@/assets/hero-bg.jpg";
 import projectPlumbing from "@/assets/project-plumbing.jpg";
-import cadVtwinAsset from "@/assets/cad-vtwin.png.asset.json";
-import cadCrankshaftAsset from "@/assets/cad-crankshaft.png.asset.json";
-import cadSprocketAsset from "@/assets/cad-sprocket.png.asset.json";
-import cadScrewAsset from "@/assets/cad-screw.png.asset.json";
-import herdSignalAsset from "@/assets/project-herdsignal.png.asset.json";
-import astralectureAsset from "@/assets/project-astralecture.png.asset.json";
-const cadVtwin = cadVtwinAsset.url;
-const cadCrankshaft = cadCrankshaftAsset.url;
-const cadSprocket = cadSprocketAsset.url;
-const cadScrew = cadScrewAsset.url;
-const herdSignal = herdSignalAsset.url;
-const astralecture = astralectureAsset.url;
+import cadVtwin from "@/assets/cad-vtwin.png";
+import cadCrankshaft from "@/assets/cad-crankshaft.png";
+import cadSprocket from "@/assets/cad-sprocket.png";
+import cadScrew from "@/assets/cad-screw.png";
+import herdSignal from "@/assets/project-herdsignal.png";
+import astralecture from "@/assets/project-astralecture.png";
 
 export const Route = createFileRoute("/")({
   head: () => ({
