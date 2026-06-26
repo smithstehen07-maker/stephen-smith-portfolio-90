@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import {
-  ArrowRight, Download, Github, Linkedin, Mail, MapPin, ExternalLink,
+  ArrowRight, Download, Github, Mail, MapPin, ExternalLink,
   Code2, Database, Brain, Layers, Server, Wrench, Quote, Send, Sparkles,
   CheckCircle2
 } from "lucide-react";
