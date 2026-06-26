@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import {
-  ArrowRight, Download, Github, Linkedin, Mail, MapPin, ExternalLink,
+  ArrowRight, Download, Github, Mail, MapPin, ExternalLink,
   Code2, Database, Brain, Layers, Server, Wrench, Quote, Send, Sparkles,
   CheckCircle2
 } from "lucide-react";
@@ -696,9 +696,8 @@ function Footer() {
           © {new Date().getFullYear()} Stephen Smith. Built with care.
         </p>
         <div className="flex gap-5 text-muted-foreground">
-          <a href="https://github.com/smithstehen07" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="transition-colors hover:text-primary"><Github className="size-5" /></a>
-          <a href="https://www.linkedin.com/in/smith-stephen-427404418" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="transition-colors hover:text-primary"><Linkedin className="size-5" /></a>
-          <a href="mailto:Smithstehen07@gmail.com" aria-label="Email" className="transition-colors hover:text-primary"><Mail className="size-5" /></a>
+          <a href="https://github.com/smithstehen07-maker" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="transition-colors hover:text-primary"><Github className="size-5" /></a>
+          <a href="mailto:smithstehen07@gmail.com" aria-label="Email" className="transition-colors hover:text-primary"><Mail className="size-5" /></a>
         </div>
       </div>
     </footer>
