@@ -19,10 +19,14 @@ import cadVtwinAsset from "@/assets/cad-vtwin.png.asset.json";
 import cadCrankshaftAsset from "@/assets/cad-crankshaft.png.asset.json";
 import cadSprocketAsset from "@/assets/cad-sprocket.png.asset.json";
 import cadScrewAsset from "@/assets/cad-screw.png.asset.json";
+import herdSignalAsset from "@/assets/project-herdsignal.png.asset.json";
+import astralectureAsset from "@/assets/project-astralecture.png.asset.json";
 const cadVtwin = cadVtwinAsset.url;
 const cadCrankshaft = cadCrankshaftAsset.url;
 const cadSprocket = cadSprocketAsset.url;
 const cadScrew = cadScrewAsset.url;
+const herdSignal = herdSignalAsset.url;
+const astralecture = astralectureAsset.url;
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -124,6 +128,40 @@ const projects: Project[] = [
     ],
     demo: "https://blue-diamond-plumbing-texas.vercel.app/",
     client: "Blue Diamond Plumbing of Texas",
+    year: "2025",
+  },
+  {
+    title: "Herd Signal — Acoustic Elephant Conservation",
+    desc: "Voice-first conservation platform that maps elephant herds, separates acoustic noise, and surfaces real-time field intelligence.",
+    longDesc:
+      "Herd Signal is a conservation-tech web app that fuses geospatial mapping, AI-powered acoustic source separation, and a voice-first exploration mode to help rangers and researchers monitor elephant herds. Built with a cinematic dark-forest aesthetic, interactive map intelligence, and an accessible voice interface so field teams can operate hands-free.",
+    stack: ["React", "TypeScript", "Web Audio API", "MapLibre", "Tailwind CSS", "Voice UI"],
+    image: herdSignal,
+    highlights: [
+      "Real-time acoustic noise separation isolates elephant vocalizations from ambient jungle audio.",
+      "Voice-first navigation mode for hands-free field operation by rangers.",
+      "Interactive herd map with live signal overlays and movement intelligence.",
+      "Fully responsive cinematic UI deployed on Cloudflare Pages edge.",
+    ],
+    demo: "https://herdsignal.pages.dev/",
+    client: "Conservation Tech",
+    year: "2025",
+  },
+  {
+    title: "AstraLecture — Cinematic Solar System Explorer",
+    desc: "Interactive 3D solar system lesson with guided narration, planet tours, and live cosmic-time scaling.",
+    longDesc:
+      "AstraLecture is an educational web experience that lets learners fly through a real-time 3D solar system. Toggle between free exploration and a narrated guided tour that moves from the Milky Way outward through all eight planets, with rich per-body data panels (mass, gravity, atmosphere, distance from Sun), scale and cosmic-time sliders, and optional ambient soundtrack + voice narration.",
+    stack: ["React", "Three.js", "React Three Fiber", "TypeScript", "Web Speech API", "Vercel"],
+    image: astralecture,
+    highlights: [
+      "Real-time WebGL solar system rendered with React Three Fiber.",
+      "Guided narrated tour using the Web Speech API with optional ambient audio.",
+      "Live scale and cosmic-time controls for intuitive astronomical scale comparisons.",
+      "Detailed data panels for the Sun and all 8 planets with Earth comparisons.",
+    ],
+    demo: "https://astralecture-2q5c.vercel.app/",
+    client: "EdTech Project",
     year: "2025",
   },
   {
