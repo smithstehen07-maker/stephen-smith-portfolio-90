@@ -19,10 +19,14 @@ import cadVtwinAsset from "@/assets/cad-vtwin.png.asset.json";
 import cadCrankshaftAsset from "@/assets/cad-crankshaft.png.asset.json";
 import cadSprocketAsset from "@/assets/cad-sprocket.png.asset.json";
 import cadScrewAsset from "@/assets/cad-screw.png.asset.json";
+import herdSignalAsset from "@/assets/project-herdsignal.png.asset.json";
+import astralectureAsset from "@/assets/project-astralecture.png.asset.json";
 const cadVtwin = cadVtwinAsset.url;
 const cadCrankshaft = cadCrankshaftAsset.url;
 const cadSprocket = cadSprocketAsset.url;
 const cadScrew = cadScrewAsset.url;
+const herdSignal = herdSignalAsset.url;
+const astralecture = astralectureAsset.url;
 
 export const Route = createFileRoute("/")({
   head: () => ({
